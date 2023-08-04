@@ -1,0 +1,8 @@
+alias c="clear"
+alias s="git status"
+alias b="git branch"
+alias a="git add -A"
+alias cmt="git commit -m"
+alias l="git --no-pager log"
+alias restore="git restore"
+alias ck="git checkout"
