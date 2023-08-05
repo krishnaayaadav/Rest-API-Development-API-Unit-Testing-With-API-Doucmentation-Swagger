@@ -39,14 +39,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    "expenseApp",
-    "corsheaders", 
-    "rest_framework",
+    "expenseApp",        # taskapp
+    "corsheaders",       # django-cors-headers for cors policy
+    "rest_framework",    # rest_framework for develop rest-api
+    "drf_spectacular",   # drf_spectacular for api documentation
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+
+    # CORS Header Middleware
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -121,8 +126,52 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR /'static'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT= BASE_DIR /'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# REST FRAMEWORK SETTINGS
+REST_FRAMEWORK = {
+    
+    # default renderer class as jsonrenderer
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    
+    # default parser
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ],
+     
+     # default authentication classes
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+
+    
+    # default schema class for api
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema'
+}
+
+
+# Spectacular Settings here
+SPECTACULAR_SETTINGS = {
+    'TITLE': "Restful Task API",
+
+    'DESCRIPTION': """This restful api project, which contains most common api services end-points such as getting all service, get single services, update particular service partially or completely as well delete service is also provided to delete some particular data.
+    Allowed Methods: [GET, POST, PUT, PATCH, DELETE]
+    """,
+
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False
+}
