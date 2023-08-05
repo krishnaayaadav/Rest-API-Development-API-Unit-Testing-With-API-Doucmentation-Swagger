@@ -1,8 +1,9 @@
 
-from expenseApp.models import Expense
 from rest_framework import serializers
+from expenseApp.models import Expense
 from django.contrib.auth.models import User
 
+# expense serializer here
 class ExpenseSerializer(serializers.Serializer):
     exp_date    = serializers.DateField(required=False, error_messages={'required': "Expense date is required"})
     exp_title   = serializers.CharField(required=False, error_messages={'required': 'Expense title is required'})
@@ -58,6 +59,7 @@ class ExpenseSerializer(serializers.Serializer):
     def create(self, validated_data):
         return Expense.objects.create(**validated_data)
     
+    # update method here
     def update(self, instance, validated_data):
         # instance means old data
         # validated_data: means new which is comming for updation
