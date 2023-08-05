@@ -3,8 +3,11 @@ from rest_framework import serializers
 from expenseApp.models import Expense
 from django.contrib.auth.models import User
 
+
 # expense serializer here
+# @extend_schema_serializer
 class ExpenseSerializer(serializers.Serializer):
+    pk          = serializers.IntegerField(required=False)
     exp_date    = serializers.DateField(required=False, error_messages={'required': "Expense date is required"})
     exp_title   = serializers.CharField(required=False, error_messages={'required': 'Expense title is required'})
     exp_description = serializers.CharField(style={

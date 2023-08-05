@@ -1,0 +1,10 @@
+django-admin startproject expenseTracker
+python manage.py runserver
+python manage.py startapp expenseApp
+python manage.py makemigrations
+python manage.py migrate
+python manage.py showmigrations
+python manage.py inspectdb
+python manage.py createsuperuser
+
+python manage.py spectacular --file schema.yml

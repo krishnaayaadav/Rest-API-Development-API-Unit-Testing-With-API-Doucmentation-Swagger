@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     "expenseApp",        # taskapp
     "corsheaders",       # django-cors-headers for cors policy
     "rest_framework",    # rest_framework for develop rest-api
-    "drf_spectacular",   # drf_spectacular for api documentation
+    "drf_yasg", 
 ]
 
 MIDDLEWARE = [
@@ -122,8 +122,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+# Static files (CSS, JavaScript, Images) and Mediafiles
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR /'static'
@@ -163,15 +162,9 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema'
 }
 
+# CORS Policy For Development Only
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8000',
+    'http://localhost:3000',
 
-# Spectacular Settings here
-SPECTACULAR_SETTINGS = {
-    'TITLE': "Restful Task API",
-
-    'DESCRIPTION': """This restful api project, which contains most common api services end-points such as getting all service, get single services, update particular service partially or completely as well delete service is also provided to delete some particular data.
-    Allowed Methods: [GET, POST, PUT, PATCH, DELETE]
-    """,
-
-    'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False
-}
+)
