@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
 
 # expense model
 class Expense(models.Model):
@@ -11,3 +10,5 @@ class Expense(models.Model):
 
     def __str__(self):
         return f'{self.exp_title} | {self.exp_user}'
+    
+    
