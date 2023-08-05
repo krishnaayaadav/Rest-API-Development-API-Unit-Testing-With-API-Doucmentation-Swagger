@@ -27,4 +27,27 @@ class ExpenseAPIView(APIView):
             return Response(serializer.data, status=created)
         else:
             return Response(serializer.errors, status=bad_request)
+        
+class ExpenseUpdateAPI(APIView):
+    
+    # get request to fetch single/details of particular expense item
+    def get(self, request, expId, format=None):
+        error_response = {
+            'data': f"Expense does found with this {expId}",
+            'status': not_found
+        }
+        try:
+            expense = Expense.objects.get(pk=expId)
 
+        except Expense.DoesNotExist:
+            return Response(error_response, status=not_found)  # expense does not exist error
+
+        except Expense.MultipleObjectsReturned:
+            return Response(error_response, status=not_found)  # multiple expense found errro
+
+
+        else: # if expense found
+            serializer = exp_serializer.ExpenseSerializer(expense)
+            return Response(serializer.data, status=ok_restponse)
+    
+    
