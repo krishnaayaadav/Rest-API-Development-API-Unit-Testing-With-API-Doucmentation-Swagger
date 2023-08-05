@@ -83,7 +83,11 @@ class ExpenseUpdateAPI(APIView):
             # checking serializer validation here
             if serializer.is_valid():
                 serializer.save() # then store serialized data into db
-                return Response(serializer.data, ok_restponse)
+                response = {
+                    'msg': 'Congrats expense successfully updated',
+                    'data': serializer.data
+                }
+                return Response(response, ok_restponse)
             else:
                 return Response(serializer.errors, status=bad_request)
         
