@@ -3,9 +3,49 @@ from rest_framework import serializers
 from expenseApp.models import Expense
 from django.contrib.auth.models import User
 
+from drf_spectacular.utils import extend_schema_serializer, OpenApiExample
 
-# expense serializer here
-# @extend_schema_serializer
+extend_schema_serializer(
+    examples=[
+        OpenApiExample(
+            name='Valid Response',
+            value={ 'all_expenses': [
+                {
+                    'pk': 1,
+                    "exp_user": "krishna",
+                    "exp_date": "2021-02-12",
+                    "exp_title": "Car Services Repair",
+                    "exp_description": """Sample of descrition: An automobile repair shop (also known regionally as a garage or a workshop) is an establishment """
+
+                },
+                {
+                    'pk': 2,
+                    "exp_user": "admin",
+                    "exp_date": "2021-02-12",
+                    "exp_title": "Mobile Services Repair",
+                    "exp_description": """Sample of descrition: An automobile repair shop (also known regionally as a garage or a workshop) is an establishment """
+
+                },
+
+                {
+                    'pk': 3,
+                    "exp_user": "krish",
+                    "exp_date": "2023-02-12",
+                    "exp_title": "LPU Collage Fees",
+                    "exp_description": """Sample of descrition: An automobile repair shop (also known regionally as a garage or a workshop) is an establishment """
+
+            },
+
+            ]
+                   
+            }
+
+        ),
+
+    ]
+    
+)
+
 class ExpenseSerializer(serializers.Serializer):
     pk          = serializers.IntegerField(required=False)
     exp_date    = serializers.DateField(required=False, error_messages={'required': "Expense date is required"})

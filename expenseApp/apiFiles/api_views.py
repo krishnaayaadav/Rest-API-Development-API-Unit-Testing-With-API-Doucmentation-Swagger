@@ -12,8 +12,18 @@ not_found    = status.HTTP_404_NOT_FOUND
 bad_request  = status.HTTP_400_BAD_REQUEST
 
 # expense api for get and post request without any parameters
+
+
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse, extend_schema_serializer, extend_schema_field, extend_schema_view, OpenApiExample
+from drf_spectacular.types import OpenApiTypes
+
 class ExpenseAPIView(APIView):
-    # get all expense here
+    @extend_schema(
+            request=exp_serializer.ExpenseSerializer,
+            summary='Get All Expense Items',
+            description="This endpoint will return all the expense items from database",
+            responses={200: exp_serializer.ExpenseSerializer}
+    )
     def get(self, request, format=None):
         all_exp = Expense.objects.all()
         serializer = exp_serializer.ExpenseSerializer(all_exp, many=True)
@@ -24,6 +34,10 @@ class ExpenseAPIView(APIView):
         return Response(response, status=ok_restponse)
     
     # add/post/insert new expense into db
+    @extend_schema(
+            request=exp_serializer.ExpenseSerializer,
+            responses={201: exp_serializer.ExpenseSerializer}
+    )
     def post(self, request, format=None):
                                    # request.data contains parsed data of user request
         serializer  = exp_serializer.ExpenseSerializer(data=request.data)

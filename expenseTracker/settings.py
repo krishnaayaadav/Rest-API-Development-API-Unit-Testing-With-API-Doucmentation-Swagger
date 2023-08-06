@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     "expenseApp",        # taskapp
     "corsheaders",       # django-cors-headers for cors policy
     "rest_framework",    # rest_framework for develop rest-api
-    "drf_yasg", 
+    "drf_spectacular",  
 ]
 
 MIDDLEWARE = [
@@ -148,18 +148,18 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
     ],
      
-     # default authentication classes
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
-    ),
+    # # default authentication classes
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework.authentication.BasicAuthentication',
+    # ),
 
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.AllowAny',
+    # ],
 
     
     # default schema class for api
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema'
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 # CORS Policy For Development Only
@@ -168,3 +168,11 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
 
 )
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'DRF Expense Tracker API',
+    'DESCRIPTION': 'This is Expense Tracker API.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}
