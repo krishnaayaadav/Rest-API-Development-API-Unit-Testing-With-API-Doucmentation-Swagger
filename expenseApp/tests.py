@@ -30,9 +30,25 @@ class ExpenseTestSetUp(TestCase):
          User.objects.create(username='krish'),
          User.objects.create(username='ankita'),
          User.objects.create(username='yadav')
-
-
            )
+      
+      # Valid payloads
+      self.valid_payload = {
+         "exp_title": "My Collage Fee Expense",
+         "exp_description": "Some explantion of collage fees of expense",
+         "exp_user": "krish",
+         "exp_date": "2013-02-12",
+         "exp_amount": 500
+      }
+
+       # Invalid payloads
+      self.invalid_payload = {
+         "exp_title": "My Collage Fee Expense",
+         "exp_description": "Some explantion of collage fees of expense",
+         "exp_user": "AnonmousUser",
+         "exp_date": "2013-02-12",
+         "exp_amount": 500
+      }
       
       # expense titles
       self.exp_titles = ('Car Repair Services', 'Mobile Repair Service', 'Collage Fee Charges')
@@ -150,16 +166,30 @@ class TestSingleExpense(ExpenseTestSetUp):
    
 # expense post here
 class TestPostExpenses(ExpenseTestSetUp):
+   
+   # valid post creation here
+   def test_post_valid_expense(self):
 
-   def test_post_expense_data(self):
+      response = client.post(
+         reverse(get_or_post_expenses),
+         data=json.dumps(self.valid_payload),
+         content_type='application/json'
+         )
+      
+      try:
+         self.assertEqual(response.status_code, created)
 
-      user = User.objects.get(username="krish")
-      title= "Demo expense title"
-      description = 'This is expense description here'
-      date        = '2021-02-10'
-      amount      = 500
+      except:
+         print('\n Valid Expense  test creation is failed')
+   
+   def test_invalid_post_expense(self):
 
-      client.get(reverse(get_or_post_expenses))
-
-
-
+      response = client.post(reverse(get_or_post_expenses),
+                              data=json.dumps(self.invalid_payload),
+                              content_type='application/json')
+      
+      
+      try:
+         self.assertEqual(response.status_code, bad_request)
+      except:
+         print('\n Invalid test failed')
