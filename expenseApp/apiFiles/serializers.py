@@ -54,6 +54,7 @@ class ExpenseSerializer(serializers.Serializer):
         'base_template': "textarea.html"
     }, required=False, error_messages={'required': 'Expense description is required. Explain what, when, where expense happed'})
     exp_user        = serializers.CharField(required=False, error_messages={'required': 'Expense user is required'})
+    exp_amount      = serializers.IntegerField(error_messages={'required': "Expense amount is required"})
 
     # custom serializer validation
     def validate(self, attrs):
@@ -61,14 +62,16 @@ class ExpenseSerializer(serializers.Serializer):
         exp_title= attrs.get('exp_title', None)
         exp_desc = attrs.get('exp_description', None)
         exp_user = attrs.get('exp_user', None)
+        exp_amount = attrs.get('exp_amount', None)
+
 
         expense = self.context.get('expense', None) # for partial updation
 
         # all field required validation here
         if not expense:
 
-            field_name = ('title', 'description', 'user', 'date',)
-            data       = (exp_title, exp_desc,  exp_user, exp_date)
+            field_name = ('title', 'description', 'user', 'date', 'exp_amount')
+            data       = (exp_title, exp_desc,  exp_user, exp_date, exp_amount)
 
             for i in range(0,4):
                 field_data = data[i] # fiedl data from user
