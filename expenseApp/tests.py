@@ -167,7 +167,7 @@ class TestSingleExpense(ExpenseTestSetUp):
 # expense post here
 class TestPostExpenses(ExpenseTestSetUp):
    
-   # valid post creation here
+   # Valid post creation here
    def test_post_valid_expense(self):
 
       response = client.post(
@@ -182,6 +182,7 @@ class TestPostExpenses(ExpenseTestSetUp):
       except:
          print('\n Valid Expense  test creation is failed')
    
+   # Invalid post request
    def test_invalid_post_expense(self):
 
       response = client.post(reverse(get_or_post_expenses),
@@ -193,3 +194,46 @@ class TestPostExpenses(ExpenseTestSetUp):
          self.assertEqual(response.status_code, bad_request)
       except:
          print('\n Invalid test failed')
+
+
+# test delete expense valid and invalid delete requests
+class TestDeleteExpense(ExpenseTestSetUp):
+   
+   # test valid expense
+   def test_valid_expense_deletion(self):
+
+      response = client.delete(reverse(update_expenses, kwargs={'expId': 3}))
+
+      res = {
+               'msg': 'Congrats expense successfully deleted',
+               }
+      try:
+         self.assertEqual(response.data, res)
+      except:
+         print('\n valid expense delete test failed')
+
+      # checking response status codes
+      try:
+         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+      except:
+         print('\n valid expense delete test failed status mis-matched')
+
+   
+   # test valid expense
+   def test_invalid_expense_deletion(self):
+      expId = 30
+
+      response = client.delete(reverse(update_expenses, kwargs={'expId': expId}))
+      
+      res = {
+         'data': f"Expense does found with this {expId}",
+         'status': not_found
+      }
+      
+      # checking response status codes
+      try:
+         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+      except:
+         print('\n Invalid expense delete test failed status mis-matched')
+
+   
