@@ -1,0 +1,253 @@
+openapi: 3.0.3
+info:
+  title: DRF Expense Tracker API
+  version: 1.0.0
+  description: This is Expense Tracker API.
+paths:
+  /expense/api/expenses/:
+    get:
+      operationId: expense_api_expenses_retrieve
+      description: This endpoint will return all the expense items from database
+      summary: Get All Expenses
+      tags:
+      - expense
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Expense'
+              examples:
+                ValidResponse1:
+                  value:
+                    all_expenses:
+                    - pk: 1
+                      exp_user: krishna
+                      exp_date: '2021-02-12'
+                      exp_amount: 4100
+                      exp_title: Car Services Repair
+                      exp_description: 'Sample of descrition: An automobile repair
+                        shop (also known regionally as a garage or a workshop) is
+                        an establishment '
+                    - pk: 2
+                      exp_user: admin
+                      exp_date: '2021-02-12'
+                      exp_amount: 2100
+                      exp_title: Mobile Services Repair
+                      exp_description: 'Sample of descrition: An automobile repair
+                        shop (also known regionally as a garage or a workshop) is
+                        an establishment '
+                    - pk: 3
+                      exp_user: krish
+                      exp_date: '2023-02-12'
+                      exp_amount: 4004
+                      exp_title: LPU Collage Fees
+                      exp_description: 'Sample of descrition: An automobile repair
+                        shop (also known regionally as a garage or a workshop) is
+                        an establishment '
+                  summary: Valid Response 1
+          description: ''
+    post:
+      operationId: expense_api_expenses_create
+      description: This endpoints are use add new expense item in our database using
+      summary: Add new expense item
+      tags:
+      - expense
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Expense'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Expense'
+              examples:
+                ValidResponse1:
+                  value:
+                    data:
+                    - msg: Congrats! expense successfully inserted
+                      data:
+                        pk: 1
+                        exp_user: krishna
+                        exp_date: '2021-02-12'
+                        exp_amount: 4100
+                        exp_title: Car Services Repair
+                        exp_description: 'Sample of descrition: An automobile repair
+                          shop (also known regionally as a garage or a workshop) is
+                          an establishment '
+                  summary: Valid Response 1
+          description: ''
+  /expense/api/expenses/{expId}/:
+    get:
+      operationId: expense_api_expenses_retrieve_2
+      description: Get detail of expense items here
+      summary: Get single expense item
+      parameters:
+      - in: path
+        name: expId
+        schema:
+          type: integer
+        required: true
+      tags:
+      - expense
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Expense'
+              examples:
+                ValidResponse1:
+                  value:
+                    data:
+                    - msg: 'Detail of expense of id: 1'
+                      data:
+                        pk: 1
+                        exp_user: krishna
+                        exp_date: '2021-02-12'
+                        exp_amount: 4100
+                        exp_title: Car Services Repair
+                        exp_description: 'Sample of descrition: An automobile repair
+                          shop (also known regionally as a garage or a workshop) is
+                          an establishment '
+                  summary: Valid Response 1
+          description: ''
+    put:
+      operationId: expense_api_expenses_update
+      description: Update all fields of expense items
+      summary: Update expense completely
+      parameters:
+      - in: path
+        name: expId
+        schema:
+          type: integer
+        required: true
+      tags:
+      - expense
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Expense'
+              examples:
+                ValidResponseData:
+                  value:
+                    data:
+                    - msg: Congrats expense successfully updated
+                      data:
+                        pk: 1
+                        exp_user: krishna
+                        exp_date: '2021-02-12'
+                        exp_amount: 4100
+                        exp_title: Car Services Repair
+                        exp_description: 'Sample of descrition: An automobile repair
+                          shop (also known regionally as a garage or a workshop) is
+                          an establishment '
+                  summary: Valid Response Data
+          description: ''
+    patch:
+      operationId: expense_api_expenses_partial_update
+      description: Update expense data partially
+      summary: Update expense partially
+      parameters:
+      - in: path
+        name: expId
+        schema:
+          type: integer
+        required: true
+      tags:
+      - expense
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Expense'
+              examples:
+                ValidResponse1:
+                  value:
+                    data:
+                    - msg: Congrats expense successfully updated
+                      data:
+                        pk: 1
+                        exp_user: krishna
+                        exp_date: '2021-02-12'
+                        exp_amount: 4100
+                        exp_title: Car Services Repair
+                        exp_description: 'Sample of descrition: An automobile repair
+                          shop (also known regionally as a garage or a workshop) is
+                          an establishment '
+                  summary: Valid Response 1
+          description: ''
+    delete:
+      operationId: expense_api_expenses_destroy
+      description: Delete particular expense item
+      summary: Delete expense item
+      parameters:
+      - in: path
+        name: expId
+        schema:
+          type: integer
+        required: true
+      tags:
+      - expense
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    Expense:
+      type: object
+      properties:
+        pk:
+          type: integer
+        exp_date:
+          type: string
+          format: date
+        exp_title:
+          type: string
+        exp_description:
+          type: string
+        exp_user:
+          type: string
+        exp_amount:
+          type: integer
+      required:
+      - exp_amount
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid

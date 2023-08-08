@@ -76,26 +76,30 @@ class ExpenseAPIView(APIView):
     # add/post/insert new expense into db
     @extend_schema(
         request=exp_serializer.ExpenseSerializer,
+        summary='Add new expense item',
+        description='This endpoints are use add new expense item in our database using',
         responses={201: OpenApiResponse(response=ExpenseSerializer,
-                        examples=[OpenApiExample(
-                                        'Valid Response 1',
-                                        value={ 'data': [
-                                            {'msg': "Congrats! expense successfully inserted",
-                                                'data': 
-                                                {
-                                                    'pk': 1,
-                                                    "exp_user": "krishna",
-                                                    "exp_date": "2021-02-12",
-                                                    "exp_amount": 4100,
-                                                    "exp_title": "Car Services Repair",
-                                                    "exp_description": """Sample of descrition: An automobile repair shop (also known regionally as a garage or a workshop) is an establishment """
+                        examples=[
+                            OpenApiExample(
+                                'Valid Response 1',
+                                value=  { 'data': 
+                                            [
+                                                {'msg': "Congrats! expense successfully inserted",
+                                                    'data': 
+                                                    {
+                                                        'pk': 1,
+                                                        "exp_user": "krishna",
+                                                        "exp_date": "2021-02-12",
+                                                        "exp_amount": 4100,
+                                                        "exp_title": "Car Services Repair",
+                                                        "exp_description": """Sample of descrition: An automobile repair shop (also known regionally as a garage or a workshop) is an establishment """
 
+                                                    }
                                                 }
-                                            }
-                                    ]   }
-
-
-                        )])}
+                                            ]  
+                                        }
+                            )
+                        ])}
 )
     def post(self, request, format=None):
                                    # request.data contains parsed data of user request
@@ -114,6 +118,31 @@ class ExpenseAPIView(APIView):
 class ExpenseUpdateAPI(APIView):
     
     # GET request to fetch single/details of particular expense item
+    @extend_schema(request=None, summary='Get single expense item',
+                    description='Get detail of expense items here',
+                    responses={200: OpenApiResponse(response=ExpenseSerializer, 
+                                                    examples=[
+                                                          OpenApiExample(
+                                'Valid Response 1',
+                                value=  { 'data': 
+                                            [
+                                                {'msg': "Detail of expense of id: 1",
+                                                    'data': 
+                                                    {
+                                                        'pk': 1,
+                                                        "exp_user": "krishna",
+                                                        "exp_date": "2021-02-12",
+                                                        "exp_amount": 4100,
+                                                        "exp_title": "Car Services Repair",
+                                                        "exp_description": """Sample of descrition: An automobile repair shop (also known regionally as a garage or a workshop) is an establishment """
+
+                                                    }
+                                                }
+                                            ]  
+                                        }
+                            )
+                                                    ]
+                                                    )})
     def get(self, request, expId, format=None):
         error_response = {
             'data': f"Expense does found with this {expId}",
@@ -138,6 +167,31 @@ class ExpenseUpdateAPI(APIView):
             return Response(response, status=ok_restponse)
     
     # PARCH  request for partial updation
+    @extend_schema(request=None, summary='Update expense partially',
+                    description='Update expense data partially',
+                    responses={200: OpenApiResponse(response=ExpenseSerializer, 
+                                                    examples=[
+                                                          OpenApiExample(
+                                'Valid Response 1',
+                                value=  { 'data': 
+                                            [
+                                                {'msg': "Congrats expense successfully updated",
+                                                    'data': 
+                                                    {
+                                                        'pk': 1,
+                                                        "exp_user": "krishna",
+                                                        "exp_date": "2021-02-12",
+                                                        "exp_amount": 4100,
+                                                        "exp_title": "Car Services Repair",
+                                                        "exp_description": """Sample of descrition: An automobile repair shop (also known regionally as a garage or a workshop) is an establishment """
+
+                                                    }
+                                                }
+                                            ]  
+                                        }
+                            )
+                                                    ]
+                                                    )})
     def patch(self, request, expId, format=None):
         error_response = {
             'data': f"Expense does found with this {expId}",
@@ -167,6 +221,31 @@ class ExpenseUpdateAPI(APIView):
                 return Response(serializer.errors, status=bad_request)
     
     # PUT request for complete updation here
+    @extend_schema(request=None, summary='Update expense completely',
+                    description='Update all fields of expense items',
+                    responses={200: OpenApiResponse(response=ExpenseSerializer, 
+                                                    examples=[
+                                                          OpenApiExample(
+                                'Valid Response Data',
+                                value=  { 'data': 
+                                            [
+                                                {'msg': "Congrats expense successfully updated",
+                                                    'data': 
+                                                    {
+                                                        'pk': 1,
+                                                        "exp_user": "krishna",
+                                                        "exp_date": "2021-02-12",
+                                                        "exp_amount": 4100,
+                                                        "exp_title": "Car Services Repair",
+                                                        "exp_description": """Sample of descrition: An automobile repair shop (also known regionally as a garage or a workshop) is an establishment """
+
+                                                    }
+                                                }
+                                            ]  
+                                        }
+                            )
+                                                    ]
+                                                    )})
     def put(self, request, expId, format=None):
         error_response = {
             'data': f"Expense does found with this {expId}",
@@ -197,6 +276,16 @@ class ExpenseUpdateAPI(APIView):
                 return Response(serializer.errors, status=bad_request)
     
     # delete some existing expense item here
+    @extend_schema(summary='Delete expense item',
+                   description='Delete particular expense item',
+                   responses={
+                       204: OpenApiResponse(
+                        examples=[OpenApiExample(
+                        'Valid Response',
+                        value={'msg': "Congrats expense successfully deleted"}
+                        )])
+                   }
+                   )
     def delete(self, request, expId, format=None):
         error_response = {
             'data': f"Expense does found with this {expId}",
