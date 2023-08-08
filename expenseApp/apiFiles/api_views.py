@@ -14,14 +14,55 @@ created      = status.HTTP_201_CREATED
 not_found    = status.HTTP_404_NOT_FOUND
 bad_request  = status.HTTP_400_BAD_REQUEST
 
+ExpenseSerializer = exp_serializer.ExpenseSerializer
 
 # expense api for get and post request without any parameters
 class ExpenseAPIView(APIView):
     @extend_schema(
-            request=exp_serializer.ExpenseSerializer,
-            summary='Get All Expense Items',
+            summary='Get All Expenses',
             description="This endpoint will return all the expense items from database",
-            responses={200: exp_serializer.ExpenseSerializer}
+            responses = {200: OpenApiResponse(
+                            response=exp_serializer.ExpenseSerializer,
+                            examples=[
+                                        OpenApiExample(
+                                        'Valid Response 1',
+                                        value={ 'all_expenses':
+                                                [
+                                                        {
+                                                            'pk': 1,
+                                                            "exp_user": "krishna",
+                                                            "exp_date": "2021-02-12",
+                                                            "exp_amount": 4100,
+                                                            "exp_title": "Car Services Repair",
+                                                            "exp_description": """Sample of descrition: An automobile repair shop (also known regionally as a garage or a workshop) is an establishment """
+
+                                                        },
+                                                        {
+                                                            'pk': 2,
+                                                            "exp_user": "admin",
+                                                            "exp_date": "2021-02-12",
+                                                            "exp_amount": 2100,
+                                                            "exp_title": "Mobile Services Repair",
+                                                            "exp_description": """Sample of descrition: An automobile repair shop (also known regionally as a garage or a workshop) is an establishment """
+
+                                                        },
+
+                                                        {
+                                                            'pk': 3,
+                                                            "exp_user": "krish",
+                                                            "exp_date": "2023-02-12",
+                                                            "exp_amount": 4004,
+                                                            "exp_title": "LPU Collage Fees",
+                                                            "exp_description": """Sample of descrition: An automobile repair shop (also known regionally as a garage or a workshop) is an establishment """
+
+                                                        }
+
+                                                ]
+                                            
+                                            }
+                                    ),
+                                    ])
+                        }
     )
     def get(self, request, format=None):
         all_exp = Expense.objects.all()
@@ -34,9 +75,28 @@ class ExpenseAPIView(APIView):
     
     # add/post/insert new expense into db
     @extend_schema(
-            request=exp_serializer.ExpenseSerializer,
-            responses={201: exp_serializer.ExpenseSerializer}
-    )
+        request=exp_serializer.ExpenseSerializer,
+        responses={201: OpenApiResponse(response=ExpenseSerializer,
+                        examples=[OpenApiExample(
+                                        'Valid Response 1',
+                                        value={ 'data': [
+                                            {'msg': "Congrats! expense successfully inserted",
+                                                'data': 
+                                                {
+                                                    'pk': 1,
+                                                    "exp_user": "krishna",
+                                                    "exp_date": "2021-02-12",
+                                                    "exp_amount": 4100,
+                                                    "exp_title": "Car Services Repair",
+                                                    "exp_description": """Sample of descrition: An automobile repair shop (also known regionally as a garage or a workshop) is an establishment """
+
+                                                }
+                                            }
+                                    ]   }
+
+
+                        )])}
+)
     def post(self, request, format=None):
                                    # request.data contains parsed data of user request
         serializer  = exp_serializer.ExpenseSerializer(data=request.data)
