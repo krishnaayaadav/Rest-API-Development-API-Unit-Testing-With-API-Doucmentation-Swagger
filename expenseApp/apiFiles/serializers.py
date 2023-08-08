@@ -69,17 +69,22 @@ class ExpenseSerializer(serializers.Serializer):
 
         # all field required validation here
         if not expense:
+            if not exp_title:
+                raise serializers.ValidationError({'exp_title': "Expense title is requierd"})
+            
+            if not exp_desc :
+                raise serializers.ValidationError({'exp_description': 'Expense is requierd'})
+            
+            if not exp_user:
+                raise serializers.ValidationError({'exp_user': "Expense user is required"})
+            
+            if not exp_amount:
+                raise serializers.ValidationError({'exp_amount': "Expense amount is requierd"})
+            
+            # expense data is none
+            if not exp_date:
+                raise serializers.ValidationError({'exp_date': 'Expense data is required'})
 
-            field_name = ('title', 'description', 'user', 'date', 'exp_amount')
-            data       = (exp_title, exp_desc,  exp_user, exp_date, exp_amount)
-
-            for i in range(0,4):
-                field_data = data[i] # fiedl data from user
-                field_naam = field_name[i]
-
-                if not field_data:
-                    raise serializers.ValidationError({f'{field_naam}': f'Expense {field_naam} is required'})
-                
         # title validation
         if exp_title:
             if len(exp_title) < 7:
@@ -115,5 +120,7 @@ class ExpenseSerializer(serializers.Serializer):
         instance.exp_date  = validated_data.get('exp_date', instance.exp_date)
         instance.exp_user  = validated_data.get('exp_user', instance.exp_user)
         instance.exp_description = validated_data.get('exp_description', instance.exp_description)
+        instance.exp_amount = validated_data.get('exp_amount', instance.exp_amount)
+
         instance.save() # saving data here
         return instance

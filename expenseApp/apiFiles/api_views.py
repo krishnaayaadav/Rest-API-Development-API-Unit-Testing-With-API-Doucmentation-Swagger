@@ -93,7 +93,6 @@ class ExpenseUpdateAPI(APIView):
         except Expense.MultipleObjectsReturned:
             return Response(error_response, status=not_found)  # multiple expense found errro
 
-
         else: # if expense found
             serializer = exp_serializer.ExpenseSerializer(expense, data=request.data, partial=True, context={'expense': expense})
 
