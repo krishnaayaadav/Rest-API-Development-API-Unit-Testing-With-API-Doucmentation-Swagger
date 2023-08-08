@@ -5,18 +5,17 @@ from rest_framework.response import Response
 from expenseApp.models import Expense
 from expenseApp.apiFiles import serializers as exp_serializer
 
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse, extend_schema_serializer, extend_schema_field, extend_schema_view, OpenApiExample
 
+# response status codes
 ok_restponse = status.HTTP_200_OK
 created      = status.HTTP_201_CREATED
 not_found    = status.HTTP_404_NOT_FOUND
 bad_request  = status.HTTP_400_BAD_REQUEST
 
+
 # expense api for get and post request without any parameters
-
-
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse, extend_schema_serializer, extend_schema_field, extend_schema_view, OpenApiExample
-from drf_spectacular.types import OpenApiTypes
-
 class ExpenseAPIView(APIView):
     @extend_schema(
             request=exp_serializer.ExpenseSerializer,
