@@ -1,8 +1,20 @@
 
 # RestFul API, Develoment, Unit Testing and API Documentation
-Expense Tracker API. It is developed using DjangoRestFramework, ORM, MySQL, SQLite3, Swagger for api documentation. Main Features all kind api enpoints to perform CRUD using API for example We have endpoints for Add New Expense, Get All Expenses, Get Single Expense ,Udpate, Delete. All api endpoints are  wel tested via performing unit test and documented using swagger to enable other developer to use it .
+Expense Tracker API. It is developed using DjangoRestFramework, ORM, MySQL, SQLite3, Swagger for api documentation. 
+Main Features: 
+### Main Features as API Development, API Unit Testing, Writting API Documentation Using Swagger
 
-## Main Features as API Development, API Unit Testing, Writting API Documentation Using Swagger
+1. API Development: it  involves developing API endpoints such as GET | POST | PUT | PATCH | DELETE, and performing custom serializer validations.
+
+
+
+2. API Testing: In this face thoroughly testing all API endpoints along with model testings also. Like Testing Get All data, Test Single Item, Testing Post API, Test Update and Developing using Unit Testing.
+
+
+
+3. API Documentation Using Swagger: in this face: creating API documentation to enable other developers to use our API, to get the idea that what request is needed and response from the servers.
+
+
 
 ### YouTube Video: https://www.youtube.com/watch?v=JVFcW9XxscA&t=8s
 
