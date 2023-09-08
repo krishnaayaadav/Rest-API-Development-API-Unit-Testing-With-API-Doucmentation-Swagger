@@ -83,15 +83,23 @@ WSGI_APPLICATION = 'expenseTracker.wsgi.application'
 # MySQL Database Configured
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'expense_db',
-        'HOST': 'localhost',
-        'USER':  'root',
-        'PASSWORD': "",
-        "PORT": '3306',
+   
+   # development db here
+   'default': {
+      'ENGINE': 'django.db.backends.sqlite3',  # database engine
+      'NAME':     BASE_DIR /'db.sqlite3'       # database name
+   },
+   
+    # testing database here 
+    'testing': {
+        'ENGINE': 'django.db.backends.mysql',  # database engine
+        'NAME': 'expense_db',                  # database name
+        'HOST': 'localhost',                   # database host 
+        'USER':  'root',                       # database user
+        'PASSWORD': "",                        # database user password 
+        "PORT": '3306',                        # database default port no
         "OPTIONS": {
-            'sql_mode': 'STRICT_TRANS_TABLES' 
+            'sql_mode': 'STRICT_TRANS_TABLES'  # sql mode 
 
         }
 

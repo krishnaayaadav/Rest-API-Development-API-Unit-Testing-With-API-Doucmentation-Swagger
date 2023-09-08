@@ -1,0 +1,21 @@
+docker build --tag django_proj_img .
+
+Note:  Make sure you at django root dir where manage.py file exists
+
+Explantion: docker build command is use to build docker image for our django project and  here we specifiying custom image names as django_proj_img
+
+docker run --publish 8000:8000 django_proj_img
+
+Explantion: docker run commands is use to run our project inside the docker container 
+            and by using publish flag we are enabling our django project can accessible outside  the containers as well
+
+
+Docker Compose Commands 
+
+docker compose build 
+
+To build docker image  by performing list of instructions that are mapped in dockerfile
+
+docker compose up
+
+To run our docker container
