@@ -164,14 +164,14 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
     ],
      
-    # # default authentication classes
-    # 'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     'rest_framework.authentication.BasicAuthentication',
-    # ),
+    # default authentication classes
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+    ),
 
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.AllowAny',
-    # ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 
 
@@ -182,14 +182,14 @@ REST_FRAMEWORK = {
 
 # CORS Policy For Development Only
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:8000',
-    'http://localhost:3000',
+    'http://localhost:8000',  # for django development server
+    'http://localhost:3000',  # for react js origin request allowed
 
 )
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'DRF Expense Tracker API',
-    'DESCRIPTION': 'This is Expense Tracker API.',
+    'DESCRIPTION': 'Expense Tracker API. It is designed usign DjangoRestFramewrk, ORM, MySQL, SQLite3, Swagger for API documentation with dockerization. Project contains 3 main features as API development | API Testing | API Documentation Using Swagger. It contains different API Endpoints for Add New Expense, Get All Expenses, Get Expense Details, Update And Delete Particular Expense Item. And also filters and complex search api is created to search different expenses with different fields. ',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     # OTHER SETTINGS
