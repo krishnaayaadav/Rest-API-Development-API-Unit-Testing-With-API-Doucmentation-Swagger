@@ -4,6 +4,7 @@ from rest_framework.response import Response
 
 from expenseApp.models import Expense
 from expenseApp.apiFiles import serializers as exp_serializer
+from rest_framework.generics import ListAPIView
 
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse, extend_schema_serializer, extend_schema_field, extend_schema_view, OpenApiExample
@@ -311,4 +312,4 @@ class ExpenseUpdateAPI(APIView):
                     'msg': 'Congrats expense successfully deleted',
                 }
                 return Response(response, status=status.HTTP_204_NO_CONTENT)
-            
+         

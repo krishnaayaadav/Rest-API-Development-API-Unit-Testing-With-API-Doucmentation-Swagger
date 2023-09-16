@@ -189,7 +189,7 @@ CORS_ORIGIN_WHITELIST = (
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'DRF Expense Tracker API',
-    'DESCRIPTION': 'Expense Tracker API. It is designed usign DjangoRestFramewrk, ORM, MySQL, SQLite3, Swagger for API documentation with dockerization. Project contains 3 main features as API development | API Testing | API Documentation Using Swagger. It contains different API Endpoints for Add New Expense, Get All Expenses, Get Expense Details, Update And Delete Particular Expense Item. And also filters and complex search api is created to search different expenses with different fields. ',
+    'DESCRIPTION': 'Expense Tracker API. It is designed usign DjangoRestFramewrk, ORM, MySQL, SQLite3, Swagger for API documentation with dockerization. Project contains 3 main features as API development | API Testing | API Documentation Using Swagger. It contains different API Endpoints for Add New Expense, Get All Expenses, Get Expense Details, Update And Delete Particular Expense Item. ',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     # OTHER SETTINGS
