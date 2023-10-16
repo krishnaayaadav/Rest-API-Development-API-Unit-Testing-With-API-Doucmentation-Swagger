@@ -3,6 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 
+from django.db.models import Q
+
 from expenseApp.models import Expense
 from .paginations import ExpensePagination
 from expenseApp.apiFiles.serializers import ExpenseSerializer
@@ -67,9 +69,77 @@ bad_request  = status.HTTP_400_BAD_REQUEST
 class ExpenseListAPIView(ListAPIView):
 
     pagination_class = ExpensePagination  # pagination class
-    queryset = Expense.objects.all()      # model querysets
+    queryset         = Expense.objects.all()      # model querysets
     serializer_class = ExpenseSerializer  # serializer class
 
+# Expense Search/Filter API
+@extend_schema(
+            summary='Expense Search API',
+            description="This endpoint will return matched  the expense items with searched keys",
+            responses = {200: OpenApiResponse(
+                            response=ExpenseSerializer,
+                            examples=[
+                                        OpenApiExample(
+                                        'Valid Response 1',
+                                        value={ 'all_expenses':
+                                                [
+                                                        {
+                                                            'pk': 1,
+                                                            "exp_user": "krishna",
+                                                            "exp_date": "2021-02-12",
+                                                            "exp_amount": 4100,
+                                                            "exp_title": "Car Services Repair",
+                                                            "exp_description": """Sample of descrition: An automobile repair shop (also known regionally as a garage or a workshop) is an establishment """
+
+                                                        },
+                                                        {
+                                                            'pk': 2,
+                                                            "exp_user": "admin",
+                                                            "exp_date": "2021-02-12",
+                                                            "exp_amount": 2100,
+                                                            "exp_title": "Mobile Services Repair",
+                                                            "exp_description": """Sample of descrition: An automobile repair shop (also known regionally as a garage or a workshop) is an establishment """
+
+                                                        },
+
+                                                        {
+                                                            'pk': 3,
+                                                            "exp_user": "krish",
+                                                            "exp_date": "2023-02-12",
+                                                            "exp_amount": 4004,
+                                                            "exp_title": "LPU Collage Fees",
+                                                            "exp_description": """Sample of descrition: An automobile repair shop (also known regionally as a garage or a workshop) is an establishment """
+
+                                                        }
+
+                                                ]
+                                            
+                                            }
+                                    ),
+                                    ])
+                        }
+    )
+class ExpenseSearchAPI(ListAPIView):
+
+    queryset  = Expense.objects.all()
+    serializer_class = ExpenseSerializer
+    pagination_class = ExpensePagination
+
+    def get_queryset(self):
+        user_search_key = self.kwargs.get('search_by', None)
+
+      
+        search_result = Expense.objects.filter(
+            Q(exp_title__icontains         = user_search_key)
+            | Q(exp_description__icontains = user_search_key)
+            | Q(exp_amount__icontains      = user_search_key)
+            | Q(exp_user__username__icontains = user_search_key)
+        )
+
+
+        return search_result
+
+    
 
 # Expense post/insert api to insert new expense via api
 class ExpensePostAPI(APIView):
