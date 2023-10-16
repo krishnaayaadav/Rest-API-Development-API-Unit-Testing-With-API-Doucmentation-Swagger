@@ -5,4 +5,7 @@ urlpatterns = [
     path('expenses/', exp_apis.ExpenseAPIView().as_view(), name='get_or_post_expense'),
     path('expenses/<int:expId>/', exp_apis.ExpenseUpdateAPI().as_view(), name='update_delete_post' ),
 
+    path('expenselist/', exp_apis.ExpenseListAPIView.as_view(), ),
+
+
 ]

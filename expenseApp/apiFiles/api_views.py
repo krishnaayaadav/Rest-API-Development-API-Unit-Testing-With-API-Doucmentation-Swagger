@@ -4,6 +4,9 @@ from rest_framework.response import Response
 
 from expenseApp.models import Expense
 from expenseApp.apiFiles import serializers as exp_serializer
+from expenseApp.apiFiles.serializers import ExpenseSerializer
+from .paginations import ExpensePagination
+
 from rest_framework.generics import ListAPIView
 
 from drf_spectacular.types import OpenApiTypes
@@ -15,7 +18,19 @@ created      = status.HTTP_201_CREATED
 not_found    = status.HTTP_404_NOT_FOUND
 bad_request  = status.HTTP_400_BAD_REQUEST
 
+
 ExpenseSerializer = exp_serializer.ExpenseSerializer
+
+# Expense list api 
+class ExpenseListAPIView(ListAPIView):
+
+    pagination_class = ExpensePagination  # pagination class
+    queryset = Expense.objects.all()      # model querysets
+    serializer_class = ExpenseSerializer  # serializer class
+
+
+
+
 
 # expense api for get and post request without any parameters
 class ExpenseAPIView(APIView):

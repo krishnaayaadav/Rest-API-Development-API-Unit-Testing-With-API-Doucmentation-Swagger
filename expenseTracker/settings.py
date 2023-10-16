@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-8bl#qkn-0e^svi%ojh&&@p=w(ucf^m9jtqk$#w9-=jc1x2^)bp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["restfulcrudapi.pythonanywhere.com"]
+ALLOWED_HOSTS = ["restfulcrudapi.pythonanywhere.com", "*"]
 
 
 # Application definition
