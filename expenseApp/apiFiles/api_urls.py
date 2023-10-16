@@ -2,10 +2,12 @@ from django.urls import path
 from expenseApp.apiFiles import api_views as exp_apis
 
 urlpatterns = [
-    path('expenses/', exp_apis.ExpenseAPIView().as_view(), name='get_or_post_expense'),
-    path('expenses/<int:expId>/', exp_apis.ExpenseUpdateAPI().as_view(), name='update_delete_post' ),
-
-    path('expenselist/', exp_apis.ExpenseListAPIView.as_view(), ),
+    # Expense API Endpoints
+    path('expense/',     exp_apis.ExpenseListAPIView.as_view(), name='get_all_expenses' ),
+    path('expense/add/', exp_apis.ExpensePostAPI.as_view(),     name='add_new_expense'),
+    path('expense/details/<int:expId>/', exp_apis.ExpenseDetailAPI.as_view(), name='get_expense_detail'),
+    path('expense/update/<int:expId>/',  exp_apis.ExpenseUpdateAPI.as_view(), name='expense_update_api'),
+    path('expense/delete/<int:expId>/',  exp_apis.ExpenseDeleteAPI.as_view(), name='expense_delete_api')
 
 
 ]
